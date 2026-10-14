@@ -1,0 +1,24 @@
+name: liechtenstein_plate
+description: "Liechtenstein's licence plates for the plate_core library — FL, the lesser arms and up to five digits in the front, long, square, motorcycle and moped formats, with dealer, temporary and customs marks, a theme per colour, an advisory validator."
+version: 0.1.0
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: '>=3.10.0 <4.0.0'
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  plate_core: ^0.11.5
+  plate_alphabet: ^0.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  assets:
+    - assets/icons/liechtenstein_lesser_arms.png
