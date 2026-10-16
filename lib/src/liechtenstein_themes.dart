@@ -3,9 +3,8 @@ import 'package:plate_core/plate_core.dart';
 
 import 'liechtenstein_colors.dart';
 
-/// One of the plate colourways: an ink on a field. Which one a vehicle gets is
-/// its category, not its plate's shape, so every livery fits every format the
-/// law allows it on.
+/// A plate colourway: an ink on a field. It follows the vehicle's category,
+/// not the plate's shape.
 @immutable
 class LiechtensteinLivery {
   const LiechtensteinLivery(this.field, this.ink);
@@ -13,13 +12,12 @@ class LiechtensteinLivery {
   final Color field;
   final Color ink;
 
-  /// Cars, lorries, buses, trailers and motorcycles.
   static const LiechtensteinLivery standard = LiechtensteinLivery(
     LiechtensteinColors.black,
     LiechtensteinColors.white,
   );
 
-  /// Short-term plates, 50000 to 50299, valid up to four days.
+  /// Short-term plates, valid up to four days.
   static const LiechtensteinLivery shortTerm = LiechtensteinLivery(
     LiechtensteinColors.black,
     LiechtensteinColors.shortTermYellow,
@@ -57,9 +55,8 @@ class LiechtensteinLivery {
   );
 }
 
-/// Themes for the plates. The law gives every format the same 10 mm corner
-/// radius, and the raised rim is about 1 mm, so both ratios depend on the
-/// plate's height: pass the spec the theme is for.
+/// Every format has a 10 mm corner radius and a ~1 mm rim, so both ratios
+/// depend on the plate's height: pass the spec the theme is for.
 abstract final class LiechtensteinThemes {
   static PlateTheme of(LiechtensteinLivery livery, PlateSpec spec) =>
       PlateTheme.monochrome(

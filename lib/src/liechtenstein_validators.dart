@@ -1,10 +1,9 @@
 import 'package:plate_core/plate_core.dart';
 
-/// The number ranges of one Liechtenstein category, as the article lists them.
-/// Reports, never bars a keystroke.
+/// Advisory validator for the number ranges of one category.
 ///
-/// The serial is digits only; a dealer number takes `U` and a customs number
-/// `Z`, printed by the spec, so neither is typed.
+/// The serial is digits only; the dealer `U` and customs `Z` are printed by
+/// the spec, not typed.
 class LiechtensteinValidator extends GatedPlateValidator {
   const LiechtensteinValidator(this.ranges, this.reason);
 
@@ -15,7 +14,7 @@ class LiechtensteinValidator extends GatedPlateValidator {
   @override
   String get gateGroup => 'serial';
 
-  /// Cars and other standard vehicles: 1–20 are official, 2000–50000 general.
+  /// 1-20 are official, 2000-50000 general.
   static const LiechtensteinValidator standard = LiechtensteinValidator(
     <(int, int)>[(1, 20), (2000, 50000)],
     'A standard number is 1–20 (official) or 2000–50000.',

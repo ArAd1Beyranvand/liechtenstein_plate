@@ -7,20 +7,16 @@ import 'package:plate_core/plate_core.dart';
 import 'liechtenstein_colors.dart';
 import 'liechtenstein_country.dart';
 
-/// One plate format: the canvas in mm (the sizes the article gives), and where
-/// its rows sit. The `FL` and arms row is the same on every variant of a
-/// format; only the serial row changes, and it is always centred on the plate,
-/// so each variant passes the measured x centres of its own pieces.
+/// One plate format: the canvas in mm and where its rows sit. The `FL` and
+/// arms row is the same on every variant of a format; only the serial row
+/// changes, and it is always centred on the plate, so each variant passes the
+/// x centres of its own pieces. Positions are read off photographs flattened to
+/// mm (`.plateref/li/img`).
 ///
-/// Every reference is a photograph (`.plateref/li/img`), flattened to the
-/// format's mm at 4 px per mm (`flat_*`) and read off with `meas.py`.
-///
-/// The plates use a condensed face; DejaVu Bold is wider. A digit advances
+/// The plates use a condensed face; the fallback is wider. A digit advances
 /// 0.5 of the slot height and `spacing` cannot be negative, so a row's height
-/// is twice its printed pitch (where the plate has room for that) and the
-/// pitch comes out right. A digit's ink is then ~0.43 of the height wide, the
-/// measured width, and ~0.525 tall: 65–70% of the reference's height. The
-/// per-format notes say how much.
+/// is twice its printed pitch where the plate has room, which gives the right
+/// pitch at 65-75% of the reference digit height.
 @immutable
 class _Format {
   const _Format({
@@ -38,10 +34,9 @@ class _Format {
   final double width, height;
 
   /// Centre of `FL`'s box and its glyph height. The front plate's glyph makes
-  /// `FL` as wide as the printed one (it has a dot 3 mm to its right on the
-  /// temporary plate); the others fill the height the row allows, wider than
-  /// printed but clear of the arms. The box centre is ~2 below the measured ink
-  /// centre, where the golden puts the ink back on it.
+  /// `FL` as wide as printed (a dot sits 3 mm right of it on the temporary
+  /// plate); the others fill the row's height, wider than printed but clear of
+  /// the arms. The box centre is ~2 below the ink centre it should land on.
   final double flCentreY, flGlyph;
 
   /// The lesser arms where the standard plate of this format prints them.
@@ -50,18 +45,15 @@ class _Format {
   /// Ink centre of the serial row, the slot height, and the printed pitch.
   final double rowCentreY, rowHeight, pitch;
 
-  /// Where the dot's ink is centred: low in the row on the square plate
-  /// (y 110–121 against digits 76–143), mid-row elsewhere. Each is the
-  /// measured centre plus the 0.65 the golden draws the dot high by.
+  /// Where the dot's ink is centred: low in the row on the square plate,
+  /// mid-row elsewhere. Includes the 0.65 the dot is otherwise drawn high by.
   final double dotCentreY;
 
   double get rowTop => rowCentreY - rowHeight / 2;
 }
 
 abstract final class _Layout {
-  /// 300×80 front plate. Measured: `FL` x 14.2–73 y 14.8–65.8; arms x 88–116
-  /// y 15–64.5; `12345` x 131–286.5 (pitch 32.1, glyph 27 wide, ink 51 tall).
-  /// Golden: digit ink 35.5 tall (70%), `FL` x 14–73.
+  /// 300×80 front plate.
   static const _Format front = _Format(
     width: 300,
     height: 80,
@@ -74,10 +66,7 @@ abstract final class _Layout {
     dotCentreY: 40.7,
   );
 
-  /// 500×110 long rear plate (`…trailer_plate_current_series`, 65100).
-  /// Measured: `FL` x 54.8–138.5 y 21–89.6; arms x 170–201 y 29–81; digits
-  /// x 232.5–455.5 (pitch 46, ink 69 tall). Golden:
-  /// digit ink 51.8 (75%), `FL` x 50–146.5 y 25–84.
+  /// 500×110 long rear plate.
   static const _Format long = _Format(
     width: 500,
     height: 110,
@@ -90,10 +79,8 @@ abstract final class _Layout {
     dotCentreY: 55.6,
   );
 
-  /// 300×160 square rear plate. Measured: `FL` x 80.6–148.6 y 13.6–62.2;
-  /// arms x 186.5–215.5 y 18–63; digits x 42–258.5 y 76–143 (pitch 44.7). The
-  /// photographs flatten to an aspect of ~1.75, not the 1.875 of 300×160; the
-  /// physical size is kept. Golden: digit ink 49 (73%), `FL` 41 (84%).
+  /// 300×160 square rear plate. The photographs flatten to an aspect of ~1.75,
+  /// not 1.875; the physical size is kept.
   static const _Format square = _Format(
     width: 300,
     height: 160,
@@ -106,9 +93,7 @@ abstract final class _Layout {
     dotCentreY: 116.1,
   );
 
-  /// 180×140 motorcycle plate. Measured: `FL` x 23.2–81.5 y 9–60; arms
-  /// x 125–154 y 12–59; `1234` x 24.8–149 y 76–128 (pitch 32.5). Golden: digit
-  /// ink 35 (67%), `FL` 37 (72%).
+  /// 180×140 motorcycle plate.
   static const _Format motorcycle = _Format(
     width: 180,
     height: 140,
@@ -121,9 +106,8 @@ abstract final class _Layout {
     dotCentreY: 103.4,
   );
 
-  /// 100×140 moped plate, three rows and no arms: `FL` x ~10–40 y 9.8–31;
-  /// `87` x 24–77 y 46–81; `013` x 8–91 y 96.8–131 (pitch 31.5). The insurance
-  /// sticker in the top right is applied, not printed, and is not drawn.
+  /// 100×140 moped plate, three rows and no arms. The applied insurance
+  /// sticker is not drawn.
   static const double mopedWidth = 100, mopedHeight = 140;
   static const double mopedFlCentreX = 25, mopedFlCentreY = 20.4;
   static const double mopedFlGlyph = 40;
@@ -141,22 +125,17 @@ abstract final class _Layout {
   static const double dotGlyph = 44;
 }
 
-/// The Liechtenstein plates since 2019 (black, with `FL`, the lesser arms and up
-/// to five digits), by format and by mark. Colour is the theme's: the same
-/// spec carries the standard, short-term, agricultural, utility, exceptional
-/// and repeater liveries (`LiechtensteinLivery`).
+/// The plates since 2019, by format and by mark. Colour is the theme's
+/// (`LiechtensteinLivery`): one spec serves every livery.
 ///
 /// - plain: `FL`, arms, digits.
-/// - dealer: three digits, a dot and `U`; the dot replaces nothing, the arms
-///   stay on the top row.
-/// - temporary: digits and a raised red bar on the right carrying the expiry
-///   month in black. The front plate has a dot in place of the arms.
-/// - customs: three digits, the red bar (blank) and `Z`.
+/// - dealer: three digits, a dot and `U`; the arms stay on the top row.
+/// - temporary: digits and a raised red bar carrying the expiry month. The
+///   front plate has a dot in place of the arms.
+/// - customs: three digits, the blank red bar and `Z`.
 ///
-/// Not implemented: the 1920s–2018 series (history), the CC/CD diplomatic
-/// plates (withdrawn; the article has no current picture), and the insurance
-/// sticker and its year print. The dealer front plate is not drawn: no
-/// reference shows one.
+/// Not implemented: pre-2019 series, diplomatic plates, the insurance sticker,
+/// and the dealer front plate (no reference).
 abstract final class LiechtensteinPlates {
   static final PlateSpec front = _plain(
     'li.front',
@@ -172,8 +151,6 @@ abstract final class LiechtensteinPlates {
     86.9,
   );
 
-  /// Measured, `101·U`: `FL` x 65–147.5; arms x 179.5–209; digits
-  /// x 243–364.8; dot x 378.5–389 y 49–61; `U` x 405–441.
   static final PlateSpec dealerLong = _dealer(
     'li.dealer.long',
     _Layout.long,
@@ -184,8 +161,6 @@ abstract final class LiechtensteinPlates {
     arms: const PlateBox(179.5, 29, 29.5, 52),
   );
 
-  /// Measured, `102·U`: digits x 42.8–164; dot x 188–200.5 y 110–121; `U`
-  /// x 223.8–260.5.
   static final PlateSpec dealerSquare = _dealer(
     'li.dealer.square',
     _Layout.square,
@@ -194,8 +169,6 @@ abstract final class LiechtensteinPlates {
     u: 242.15,
   );
 
-  /// Measured, `507·U`: digits x 15.6–103.4 (pitch 30.8); dot x 117–126
-  /// y 98.5–107; `U` x 139.6–166.5.
   static final PlateSpec dealerMotorcycle = _dealer(
     'li.dealer.motorcycle',
     _Layout.motorcycle,
@@ -205,9 +178,6 @@ abstract final class LiechtensteinPlates {
     u: 153.05,
   );
 
-  /// Measured, `92999`: `FL` x 15–72.5; dot x 76–85 y 34–44; digits
-  /// x 90.8–245; bar x 251.5–282.8 y 12.5–71. The article gives the bar as
-  /// 33×67; the photograph's 31.3×58.5 is used.
   static final PlateSpec temporaryFront = _temporary(
     'li.temporary.front',
     _Layout.front,
@@ -217,8 +187,6 @@ abstract final class LiechtensteinPlates {
     dot: 80.5,
   );
 
-  /// Measured: `FL` x 28.8–113.2; arms x 144–175.5; digits x 206–423
-  /// (pitch 45); bar x 436–472 y 19.5–94.5, the 36×75 the article gives.
   static final PlateSpec temporaryLong = _temporary(
     'li.temporary.long',
     _Layout.long,
@@ -229,7 +197,6 @@ abstract final class LiechtensteinPlates {
     arms: const PlateBox(144, 29, 31.5, 52),
   );
 
-  /// Measured, `95008`: digits x 28.9–231.8 (pitch 42.1); bar x 237.8–273.4.
   static final PlateSpec temporarySquare = _temporary(
     'li.temporary.square',
     _Layout.square,
@@ -238,8 +205,6 @@ abstract final class LiechtensteinPlates {
     bar: const PlateBox(237.8, 81, 35.6, 66),
   );
 
-  /// Measured, `1843`: digits x 8.8–129.8 (pitch 31.6); bar x 136–171
-  /// y 72.5–131.8.
   static final PlateSpec temporaryMotorcycle = _temporary(
     'li.temporary.motorcycle',
     _Layout.motorcycle,
@@ -249,8 +214,6 @@ abstract final class LiechtensteinPlates {
     length: 4,
   );
 
-  /// Measured, `612 Z`: `FL` x 15.8–76.5; dot x 90.8–99.5 y 36.8–45.5; digits
-  /// x 114–207; bar x 213–248 y 10–72.5; `Z` x 253.5–282.
   static final PlateSpec customsFront = _customs(
     'li.customs.front',
     _Layout.front,
@@ -261,8 +224,6 @@ abstract final class LiechtensteinPlates {
     dot: 95.15,
   );
 
-  /// Measured, `612 Z`: `FL` x 46.5–130.5; arms x 168.5–197; digits
-  /// x 235–363.5; bar x 372–409 y 16.8–92.2; `Z` x 417–454.
   static final PlateSpec customsLong = _customs(
     'li.customs.long',
     _Layout.long,
@@ -273,8 +234,6 @@ abstract final class LiechtensteinPlates {
     arms: const PlateBox(168.5, 29, 28.5, 52),
   );
 
-  /// Measured, `655 Z`: digits x 44.8–164 (pitch 42.5); bar x 175.8–210.5
-  /// y 81–147; `Z` x 220–252.
   static final PlateSpec customsSquare = _customs(
     'li.customs.square',
     _Layout.square,
@@ -360,7 +319,6 @@ abstract final class LiechtensteinPlates {
     decals: <PlateDecal>[
       if (arms != null)
         PlateDecal(
-          // Commons: File:Lesser_Coat_of_arms_of_Liechtenstein.svg.
           image: const AssetImage(
             'assets/icons/liechtenstein_lesser_arms.png',
             package: 'liechtenstein_plate',
@@ -374,8 +332,7 @@ abstract final class LiechtensteinPlates {
     ],
   );
 
-  /// `FL` on the two-line plates sits where the standard plate has it,
-  /// whatever the serial row holds: x 80.6–148.6 of 300, 23.2–81.5 of 180.
+  /// `FL` sits where the standard plate has it, whatever the serial row holds.
   static double _flX(_Format f, double? fl) =>
       fl ?? (identical(f, _Layout.square) ? 114.6 : 52.35);
 
@@ -426,8 +383,7 @@ abstract final class LiechtensteinPlates {
     bands: <PlateBand>[_bar(bar)],
     slots: <PlateSlot>[
       _row(f, digits, length, minLength: 4, pitch: pitch),
-      // The expiry month, black, in a square at the middle of the bar: the
-      // photographs print it about as tall as the bar is wide.
+      // Expiry month: a black square mid-bar, as tall as the bar is wide.
       PlateSlot(
         alphabet: LiechtensteinAlphabets.digits,
         box: PlateBox(
@@ -517,9 +473,8 @@ abstract final class LiechtensteinPlates {
     );
   }
 
-  /// A label centred on ([x], [y]). A label is centred in its box, but its
-  /// text is laid out at the box's width, so the box is as wide as the text:
-  /// `FL` is ~0.9 of its glyph height across, a letter ~0.6.
+  /// A label centred on ([x], [y]). Text is laid out at the box's width, so
+  /// the box is sized to the text (`FL` ~0.9 of glyph height, a letter ~0.6).
   static PlateLabel _centred(String text, double x, double y, double glyph) {
     final double width = glyph * (text.length > 1 ? 1 : 0.7);
     return PlateLabel(
