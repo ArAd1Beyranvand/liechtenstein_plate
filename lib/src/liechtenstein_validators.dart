@@ -75,9 +75,7 @@ class LiechtensteinValidator extends GatedPlateValidator {
   @override
   PlateValidation judge(PlateEntry entry) {
     final String serial = entry.group('serial');
-    final int? n = RegExp(r'^[0-9]+$').hasMatch(serial)
-        ? int.tryParse(serial)
-        : null;
+    final int? n = isDigits(serial) ? int.parse(serial) : null;
     final bool ok =
         n != null &&
         !serial.startsWith('0') &&
