@@ -58,12 +58,11 @@ class LiechtensteinLivery {
 /// Every format has a 10 mm corner radius and a ~1 mm rim, so both ratios
 /// depend on the plate's height: pass the spec the theme is for.
 abstract final class LiechtensteinThemes {
-  static PlateTheme of(LiechtensteinLivery livery, PlateSpec spec) =>
-      PlateTheme.monochrome(
-        field: livery.field,
-        ink: livery.ink,
-        inactive: LiechtensteinColors.inactive,
-        borderWidthRatio: 1 / spec.canvasHeight,
-        plateRadiusRatio: 10 / spec.canvasHeight,
-      );
+  static PlateTheme of(LiechtensteinLivery livery, PlateSpec spec) => PlateTheme.monochrome(
+    field: livery.field,
+    ink: livery.ink,
+    inactive: LiechtensteinColors.inactive,
+    borderWidthRatio: 1 / spec.canvasHeight,
+    plateRadiusRatio: 10 / spec.canvasHeight,
+  );
 }

@@ -27,65 +27,40 @@ void main() {
 
   /// category id -> (spec, livery, sample value: one space-separated token
   /// per slot)
-  final Map<String, (PlateSpec, LiechtensteinLivery, String)>
-  cases = <String, (PlateSpec, LiechtensteinLivery, String)>{
-    'front': (LiechtensteinPlates.front, std, '12345'),
-    'long': (LiechtensteinPlates.long, std, '65100'),
-    'square': (LiechtensteinPlates.square, std, '12345'),
-    'motorcycle': (LiechtensteinPlates.motorcycle, std, '1234'),
-    'short_term': (
-      LiechtensteinPlates.long,
-      LiechtensteinLivery.shortTerm,
-      '50123',
-    ),
-    'agricultural': (
-      LiechtensteinPlates.front,
-      LiechtensteinLivery.agricultural,
-      '1943',
-    ),
-    'utility': (LiechtensteinPlates.square, LiechtensteinLivery.utility, '345'),
-    'exceptional': (
-      LiechtensteinPlates.long,
-      LiechtensteinLivery.exceptional,
-      '5012',
-    ),
-    'repeater': (
-      LiechtensteinPlates.long,
-      LiechtensteinLivery.repeater,
-      '23456',
-    ),
-    'light_motorcycle': (
-      LiechtensteinPlates.motorcycle,
-      LiechtensteinLivery.lightMotorcycle,
-      '7123',
-    ),
-    'moped': (LiechtensteinPlates.moped, LiechtensteinLivery.moped, '87 013'),
-    'dealer_long': (LiechtensteinPlates.dealerLong, std, '101'),
-    'dealer_square': (LiechtensteinPlates.dealerSquare, std, '102'),
-    'dealer_motorcycle': (LiechtensteinPlates.dealerMotorcycle, std, '507'),
-    'temporary_front': (LiechtensteinPlates.temporaryFront, std, '92999 12'),
-    'temporary_long': (LiechtensteinPlates.temporaryLong, std, '92999 12'),
-    'temporary_square': (LiechtensteinPlates.temporarySquare, std, '95008 6'),
-    'temporary_motorcycle': (
-      LiechtensteinPlates.temporaryMotorcycle,
-      std,
-      '1843 9',
-    ),
-    'customs_front': (LiechtensteinPlates.customsFront, std, '612'),
-    'customs_long': (LiechtensteinPlates.customsLong, std, '612'),
-    'customs_square': (LiechtensteinPlates.customsSquare, std, '655'),
-  };
+  final Map<String, (PlateSpec, LiechtensteinLivery, String)> cases =
+      <String, (PlateSpec, LiechtensteinLivery, String)>{
+        'front': (LiechtensteinPlates.front, std, '12345'),
+        'long': (LiechtensteinPlates.long, std, '65100'),
+        'square': (LiechtensteinPlates.square, std, '12345'),
+        'motorcycle': (LiechtensteinPlates.motorcycle, std, '1234'),
+        'short_term': (LiechtensteinPlates.long, LiechtensteinLivery.shortTerm, '50123'),
+        'agricultural': (LiechtensteinPlates.front, LiechtensteinLivery.agricultural, '1943'),
+        'utility': (LiechtensteinPlates.square, LiechtensteinLivery.utility, '345'),
+        'exceptional': (LiechtensteinPlates.long, LiechtensteinLivery.exceptional, '5012'),
+        'repeater': (LiechtensteinPlates.long, LiechtensteinLivery.repeater, '23456'),
+        'light_motorcycle': (
+          LiechtensteinPlates.motorcycle,
+          LiechtensteinLivery.lightMotorcycle,
+          '7123',
+        ),
+        'moped': (LiechtensteinPlates.moped, LiechtensteinLivery.moped, '87 013'),
+        'dealer_long': (LiechtensteinPlates.dealerLong, std, '101'),
+        'dealer_square': (LiechtensteinPlates.dealerSquare, std, '102'),
+        'dealer_motorcycle': (LiechtensteinPlates.dealerMotorcycle, std, '507'),
+        'temporary_front': (LiechtensteinPlates.temporaryFront, std, '92999 12'),
+        'temporary_long': (LiechtensteinPlates.temporaryLong, std, '92999 12'),
+        'temporary_square': (LiechtensteinPlates.temporarySquare, std, '95008 6'),
+        'temporary_motorcycle': (LiechtensteinPlates.temporaryMotorcycle, std, '1843 9'),
+        'customs_front': (LiechtensteinPlates.customsFront, std, '612'),
+        'customs_long': (LiechtensteinPlates.customsLong, std, '612'),
+        'customs_square': (LiechtensteinPlates.customsSquare, std, '655'),
+      };
 
-  for (final MapEntry<String, (PlateSpec, LiechtensteinLivery, String)> c
-      in cases.entries) {
+  for (final MapEntry<String, (PlateSpec, LiechtensteinLivery, String)> c in cases.entries) {
     testWidgets(c.key, (tester) async {
-      final (PlateSpec spec, LiechtensteinLivery livery, String values) =
-          c.value;
+      final (PlateSpec spec, LiechtensteinLivery livery, String values) = c.value;
       final PlateTheme theme = LiechtensteinThemes.of(livery, spec);
-      final PlateController controller = PlateController.fromValues(
-        spec,
-        values.split(' '),
-      );
+      final PlateController controller = PlateController.fromValues(spec, values.split(' '));
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -118,10 +93,7 @@ void main() {
         }
       });
       await tester.pumpAndSettle();
-      await expectLater(
-        find.byType(PlateView),
-        matchesGoldenFile('goldens/li_${c.key}.png'),
-      );
+      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/li_${c.key}.png'));
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });

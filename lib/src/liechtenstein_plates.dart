@@ -137,19 +137,10 @@ abstract final class _Layout {
 /// Not implemented: pre-2019 series, diplomatic plates, the insurance sticker,
 /// and the dealer front plate (no reference).
 abstract final class LiechtensteinPlates {
-  static final PlateSpec front = _plain(
-    'li.front',
-    _Layout.front,
-    208.75,
-    43.6,
-  );
+  static final PlateSpec front = _plain('li.front', _Layout.front, 208.75, 43.6);
   static final PlateSpec long = _plain('li.long', _Layout.long, 344, 96.65);
   static final PlateSpec square = _plain('li.square', _Layout.square, 150.25);
-  static final PlateSpec motorcycle = _plain(
-    'li.motorcycle',
-    _Layout.motorcycle,
-    86.9,
-  );
+  static final PlateSpec motorcycle = _plain('li.motorcycle', _Layout.motorcycle, 86.9);
 
   static final PlateSpec dealerLong = _dealer(
     'li.dealer.long',
@@ -268,12 +259,7 @@ abstract final class LiechtensteinPlates {
       ),
     ],
     labels: <PlateLabel>[
-      _centred(
-        'FL',
-        _Layout.mopedFlCentreX,
-        _Layout.mopedFlCentreY,
-        _Layout.mopedFlGlyph,
-      ),
+      _centred('FL', _Layout.mopedFlCentreX, _Layout.mopedFlCentreY, _Layout.mopedFlGlyph),
     ],
     textGroups: const <PlateTextGroup>[
       PlateTextGroup(<int>[0, 1], key: 'serial'),
@@ -333,17 +319,15 @@ abstract final class LiechtensteinPlates {
   );
 
   /// `FL` sits where the standard plate has it, whatever the serial row holds.
-  static double _flX(_Format f, double? fl) =>
-      fl ?? (identical(f, _Layout.square) ? 114.6 : 52.35);
+  static double _flX(_Format f, double? fl) => fl ?? (identical(f, _Layout.square) ? 114.6 : 52.35);
 
-  static PlateSpec _plain(String id, _Format f, double digits, [double? fl]) =>
-      _spec(
-        id,
-        f,
-        slots: <PlateSlot>[_row(f, digits, 5, minLength: 1)],
-        labels: <PlateLabel>[_fl(f, fl)],
-        arms: f.arms,
-      );
+  static PlateSpec _plain(String id, _Format f, double digits, [double? fl]) => _spec(
+    id,
+    f,
+    slots: <PlateSlot>[_row(f, digits, 5, minLength: 1)],
+    labels: <PlateLabel>[_fl(f, fl)],
+    arms: f.arms,
+  );
 
   static PlateSpec _dealer(
     String id,
@@ -358,11 +342,7 @@ abstract final class LiechtensteinPlates {
     id,
     f,
     slots: <PlateSlot>[_row(f, digits, 3, pitch: pitch)],
-    labels: <PlateLabel>[
-      _fl(f, fl),
-      _dot(f, dot),
-      _centred('U', u, f.rowCentreY, f.rowHeight),
-    ],
+    labels: <PlateLabel>[_fl(f, fl), _dot(f, dot), _centred('U', u, f.rowCentreY, f.rowHeight)],
     arms: arms ?? f.arms,
   );
 
@@ -386,12 +366,7 @@ abstract final class LiechtensteinPlates {
       // Expiry month: a black square mid-bar, as tall as the bar is wide.
       PlateSlot(
         alphabet: LiechtensteinAlphabets.digits,
-        box: PlateBox(
-          bar.left,
-          bar.top + (bar.height - bar.width) / 2,
-          bar.width,
-          bar.width,
-        ),
+        box: PlateBox(bar.left, bar.top + (bar.height - bar.width) / 2, bar.width, bar.width),
         length: 2,
         minLength: 1,
         color: LiechtensteinColors.black,
@@ -428,8 +403,7 @@ abstract final class LiechtensteinPlates {
   static PlateLabel _fl(_Format f, double? fl) =>
       _centred('FL', _flX(f, fl), f.flCentreY, f.flGlyph);
 
-  static PlateLabel _dot(_Format f, double x) =>
-      _centred('•', x, f.dotCentreY, _Layout.dotGlyph);
+  static PlateLabel _dot(_Format f, double x) => _centred('•', x, f.dotCentreY, _Layout.dotGlyph);
 
   /// The raised red bar; its corners are rounded like the plate's, ~2 mm.
   static PlateBand _bar(PlateBox box) => PlateBand(
@@ -439,20 +413,8 @@ abstract final class LiechtensteinPlates {
     bottomCornerRadius: 2,
   );
 
-  static PlateSlot _row(
-    _Format f,
-    double centreX,
-    int length, {
-    int? minLength,
-    double? pitch,
-  }) => _digits(
-    centreX,
-    f.rowTop,
-    f.rowHeight,
-    pitch ?? f.pitch,
-    length,
-    minLength: minLength,
-  );
+  static PlateSlot _row(_Format f, double centreX, int length, {int? minLength, double? pitch}) =>
+      _digits(centreX, f.rowTop, f.rowHeight, pitch ?? f.pitch, length, minLength: minLength);
 
   static PlateSlot _digits(
     double centreX,

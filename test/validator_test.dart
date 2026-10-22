@@ -3,11 +3,8 @@ import 'package:liechtenstein_plate/liechtenstein_plate.dart';
 import 'package:plate_core/plate_core.dart';
 
 void main() {
-  PlateValidation judge(
-    LiechtensteinValidator v,
-    PlateSpec spec,
-    List<String> values,
-  ) => v.judge(PlateEntry(spec: spec, values: values));
+  PlateValidation judge(LiechtensteinValidator v, PlateSpec spec, List<String> values) =>
+      v.judge(PlateEntry(spec: spec, values: values));
 
   test('standard ranges', () {
     final PlateSpec s = LiechtensteinPlates.long;
