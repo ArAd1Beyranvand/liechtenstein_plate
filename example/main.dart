@@ -16,7 +16,10 @@ class ExampleApp extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: PlateCanvas(
               spec: LiechtensteinPlates.front,
-              theme: LiechtensteinThemes.of(LiechtensteinLivery.standard, LiechtensteinPlates.front),
+              theme: LiechtensteinThemes.of(
+                LiechtensteinLivery.standard,
+                LiechtensteinPlates.front,
+              ),
               onChooseCharacter: (alphabet) async => null,
             ),
           ),
