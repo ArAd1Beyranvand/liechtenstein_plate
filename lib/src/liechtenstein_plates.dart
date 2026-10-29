@@ -319,6 +319,9 @@ abstract final class LiechtensteinPlates {
     decals: <PlateDecal>[
       if (arms != null)
         PlateDecal(
+          // TODO(py): [H2][D6] ImageProvider: reference the raster as package + path; importlib.resources.
+          // TODO(ts): [H2][D6] ImageProvider: reference the raster as package + path; import as asset URL.
+          // TODO(kt): [H2][D6] ImageProvider: reference the raster as package + path; Res/compose resources.
           image: const AssetImage(
             'assets/icons/liechtenstein_lesser_arms.png',
             package: 'liechtenstein_plate',
