@@ -1,7 +1,7 @@
 name: liechtenstein_plate
 description: "Liechtenstein's licence plates for plate_core: FL, the lesser arms and up to five digits in the front, long, square, motorcycle and moped formats, with dealer, and more."
 version: 0.1.0
-repository: https://github.com/ArAd1Beyranvand/liechtenstein_plate
+repository: https://github.com/ArAd1Beyranvand/liechtenstein_plate/tree/main/flutter
 resolution: workspace
 
 environment:
