@@ -4,9 +4,6 @@
 /// variants, eight liveries, and an advisory validator per category.
 library;
 
-// TODO(py): [D5] one module `plates.countries.liechtenstein`; assets via importlib.resources.
-// TODO(ts): [D5] one subpath export `./countries/liechtenstein`; tree-shakable.
-// TODO(kt): [D5] package `countries.liechtenstein` in the countries module.
 export 'package:plate_alphabet/plate_alphabet.dart' show LiechtensteinAlphabets;
 export 'src/liechtenstein_colors.dart';
 export 'src/liechtenstein_country.dart';

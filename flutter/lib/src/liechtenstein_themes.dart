@@ -9,8 +9,7 @@ import 'liechtenstein_colors.dart';
 class LiechtensteinLivery {
   const LiechtensteinLivery(this.field, this.ink);
 
-  final Color field;
-  final Color ink;
+  final Color field, ink;
 
   static const LiechtensteinLivery standard = LiechtensteinLivery(
     LiechtensteinColors.black,

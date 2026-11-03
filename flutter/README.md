@@ -6,13 +6,24 @@ GO VEGAN 🌱
 
 From the mighty people of Iran to the steadfast people of Liechtenstein to view examples:
 
-https://platexample.ir/#/discover/liechtenstein
+https://platexample.ir/#/discover/liechtenstein:flutter
 
 # liechtenstein_plate
 
-Liechtenstein's licence plates for the `plate_core` library. The black `FL` plates in five formats, with dealer, temporary and customs variants, eight liveries, and an advisory validator per category.
+Liechtenstein's licence plates for plate_core: FL, the lesser arms and up to five digits in the front, long, square, motorcycle and moped formats, with dealer, and more.
 
-## Install
+## Languages
+
+| Language | Folder | Example |
+| --- | --- | --- |
+| Flutter / Dart | [`flutter/`](https://github.com/ArAd1Beyranvand/liechtenstein_plate/tree/main/flutter) | [platexample](https://platexample.ir/#/discover/liechtenstein:flutter) |
+| Kotlin | [`kotlin/`](https://github.com/ArAd1Beyranvand/liechtenstein_plate/tree/main/kotlin) | [platexample](https://platexample.ir/#/discover/liechtenstein:kotlin) |
+| Python | [`python/`](https://github.com/ArAd1Beyranvand/liechtenstein_plate/tree/main/python) | [platexample](https://platexample.ir/#/discover/liechtenstein:python) |
+| TypeScript | [`typescript/`](https://github.com/ArAd1Beyranvand/liechtenstein_plate/tree/main/typescript) | [platexample](https://platexample.ir/#/discover/liechtenstein:typescript) |
+
+## Quick start
+
+### Install
 
 ```yaml
 dependencies:
@@ -20,7 +31,7 @@ dependencies:
   liechtenstein_plate: ^0.1.0
 ```
 
-## Use
+### Use
 
 ```dart
 import 'package:plate_core/plate_core.dart';
@@ -34,12 +45,38 @@ PlateCanvas(
 );
 ```
 
-## Contains
+## Specs
 
-- `LiechtensteinCountry` — country panel: `liechtenstein`.
-- `LiechtensteinPlates` — 15 plate specs: `front`, `long`, `square`, `motorcycle`, `dealerLong`, `dealerSquare`, `dealerMotorcycle`, `temporaryFront`, `temporaryLong`, `temporarySquare`, `temporaryMotorcycle`, `customsFront`, `customsLong`, `customsSquare` and 1 more.
-- `LiechtensteinValidator` — advisory validator; flags the frame, never blocks a keystroke.
-- 1 bundled asset (`liechtenstein_lesser_arms.png`).
+Each spec is one plate layout.
+
+- `LiechtensteinPlates.front`
+- `LiechtensteinPlates.long`
+- `LiechtensteinPlates.square`
+- `LiechtensteinPlates.motorcycle`
+- `LiechtensteinPlates.dealerLong`
+- `LiechtensteinPlates.dealerSquare`
+- `LiechtensteinPlates.dealerMotorcycle`
+- `LiechtensteinPlates.temporaryFront`
+- `LiechtensteinPlates.temporaryLong`
+- `LiechtensteinPlates.temporarySquare`
+- `LiechtensteinPlates.temporaryMotorcycle`
+- `LiechtensteinPlates.customsFront`
+- `LiechtensteinPlates.customsLong`
+- `LiechtensteinPlates.customsSquare` — id `li.moped`
+- `LiechtensteinPlates.moped` — id `li.moped`
+
+## Themes
+
+- `LiechtensteinLivery.of`(…)
+
+## Change it
+
+`PlateCanvas` takes `spec:` (an entry of `LiechtensteinPlates`) and `theme:` (an entry of `LiechtensteinLivery`). Set `validator:` to `LiechtensteinValidator()` and `autoValidate: true` to show validation hints.
+
+## Also included
+
+- `LiechtensteinCountry` — the country panel.
+- `LiechtensteinValidator` — the plate validator.
 
 ## Plates
 
@@ -59,3 +96,6 @@ and the dealer front plate (no reference).
 
 Painted by [`plate_core`](https://pub.dev/packages/plate_core); alphabets shared through [`plate_alphabet`](https://pub.dev/packages/plate_alphabet); optional character picker in [`plate_keypad`](https://pub.dev/packages/plate_keypad).
 
+## License
+
+See [LICENSE](https://github.com/ArAd1Beyranvand/liechtenstein_plate/blob/main/LICENSE).

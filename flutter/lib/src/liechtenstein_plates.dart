@@ -319,9 +319,6 @@ abstract final class LiechtensteinPlates {
     decals: <PlateDecal>[
       if (arms != null)
         PlateDecal(
-          // TODO(py): [H2][D6] ImageProvider: reference the raster as package + path; importlib.resources.
-          // TODO(ts): [H2][D6] ImageProvider: reference the raster as package + path; import as asset URL.
-          // TODO(kt): [H2][D6] ImageProvider: reference the raster as package + path; Res/compose resources.
           image: const AssetImage(
             'assets/icons/liechtenstein_lesser_arms.png',
             package: 'liechtenstein_plate',
@@ -482,7 +479,7 @@ abstract final class LiechtensteinPlates {
     final double width = glyph * (text.length > 1 ? 1 : 0.7);
     return PlateLabel(
       text: text,
-      box: PlateBox(x - width / 2, y - glyph / 2, width, glyph),
+      box: PlateBox.centered(x, y, width, glyph),
       glyphHeight: glyph,
     );
   }

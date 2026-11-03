@@ -1,21 +1,15 @@
 import 'package:plate_core/plate_core.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Advisory validator for the number ranges of one category.
 ///
 /// The serial is digits only; the dealer `U` and customs `Z` are printed by
 /// the spec, not typed.
 class LiechtensteinValidator extends GatedPlateValidator {
-  const LiechtensteinValidator(this.ranges, this.reason);
+  const LiechtensteinValidator(this.ranges, this.reason) : super('serial');
 
   /// Inclusive ranges the serial must fall in.
   final List<(int, int)> ranges;
   final String reason;
-
-  @override
-  String get gateGroup => 'serial';
 
   /// 1-20 are official, 2000-50000 general.
   static const LiechtensteinValidator standard = LiechtensteinValidator(

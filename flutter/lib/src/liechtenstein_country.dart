@@ -7,7 +7,6 @@ import 'liechtenstein_colors.dart';
 abstract final class LiechtensteinCountry {
   static const PlateCountry liechtenstein = PlateCountry(
     code: 'li',
-    captionLines: <String>[],
     panelColor: LiechtensteinColors.black,
     panelTextColor: LiechtensteinColors.white,
   );
